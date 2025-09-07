@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Banking Interface</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bank-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .balance-display p {
+      margin: 0;
+      font-weight: bold;
+      color: #666;
+    }
+
+    #balance {
+      font-size: 2rem;
+      color: green;
+      margin: 10px 0;
+    }
+
+    .transaction-form {
+      margin-top: 20px;
+    }
+
+    #amount {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    button:first-child {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    button:last-child {
+      background-color: #f44336;
+      color: white;
+    }
+
+    #message {
+      margin-top: 10px;
+      color: red;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .bank-container {
+        width: 90%;
+        padding: 20px;
+      }
+
+      #balance {
+        font-size: 1.5rem;
+      }
+
+      button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bank-container">
+    <h1>My Bank</h1>
+    <div class="balance-display">
+      <p>Current Balance:</p>
+      <h2 id="balance">$0.00</h2>
+    </div>
+
+    <div class="transaction-form">
+      <input type="number" id="amount" placeholder="Enter amount" min="1" />
+      <div class="buttons">
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+      </div>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script>
+    let balance = 0;
+
+    function updateBalance() {
+      document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
+    }
+
+    function showMessage(message, isError = true) {
+      const msg = document.getElementById('message');
+      msg.innerText = message;
+      msg.style.color = isError ? 'red' : 'green';
+      setTimeout(() => msg.innerText = '', 3000);
+    }
+
+    function getAmount() {
+      const amountInput = document.getElementById('amount');
+      const amount = parseFloat(amountInput.value);
+      if (isNaN(amount) || amount <= 0) {
+        showMessage('Please enter a valid amount.');
+        return null;
+      }
+      return amount;
+    }
+
+    function deposit() {
+      const amount = getAmount();
+      if (amount !== null) {
+        balance += amount;
+        updateBalance();
+        showMessage('Deposit successful!', false);
+        document.getElementById('amount').value = '';
+      }
+    }
+
+    function withdraw() {
+      const amount = getAmount();
+      if (amount !== null) {
+        if (amount > balance) {
+          showMessage('Insufficient balance.');
+        } else {
+          balance -= amount;
+          updateBalance();
+          showMessage('Withdrawal successful!', false);
+          document.getElementById('amount').value = '';
+        }
+      }
+    }
+
+    // Initialize balance on load
+    updateBalance();
+  </script>
+</body>
+</html>
