@@ -1,12 +1,12 @@
 # Responsive-Banking-UI
-In my project Objectives 
+In my project Objectives:
 
-Design a banking UI with balance display
+1.Design a banking UI with balance display
 
-Implement deposit/withdrawal buttons
+2.Implement deposit/withdrawal buttons
 
-Make the interface responsive using media queries
+3.Make the interface responsive using media queries
 
-Add interactive elements with JavaScript
+4.Add interactive elements with JavaScript
 
-Validate form inputs
+5.Validate form inputs
